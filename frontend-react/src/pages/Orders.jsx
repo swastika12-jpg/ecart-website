@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_URL } from "../config";
 
 function Orders({ user, setPage, addToast }) {
   const [orders, setOrders] = useState([]);
@@ -9,7 +10,7 @@ function Orders({ user, setPage, addToast }) {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("http://localhost:5000/api/orders/myorders", {
+      const response = await fetch(`${API_URL}/api/orders/myorders`, {
         credentials: "include",
       });
 

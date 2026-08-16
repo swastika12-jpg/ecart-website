@@ -6,6 +6,7 @@ import Login from "./pages/Login"; // Note: verified case sensitivity
 import Orders from "./pages/Orders";
 import AdminDashboard from "./pages/AdminDashboard";
 import Chatbot from "./components/Chatbot";
+import { API_URL } from "./config";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -49,7 +50,7 @@ function App() {
   // Fetch products from backend
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/products");
+      const response = await fetch(`${API_URL}/api/products`);
       if (response.ok) {
         const data = await response.json();
         setProducts(data);
@@ -70,7 +71,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:5000/api/auth/logout", {
+      await fetch(`${API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

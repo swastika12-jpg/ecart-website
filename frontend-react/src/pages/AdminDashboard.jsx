@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_URL } from "../config";
 
 function AdminDashboard({ user, products, refreshProducts, addToast }) {
   const [activeTab, setActiveTab] = useState("products"); // 'products' or 'orders'
@@ -22,7 +23,7 @@ function AdminDashboard({ user, products, refreshProducts, addToast }) {
     if (!user || user.role !== "admin") return;
     setLoadingOrders(true);
     try {
-      const response = await fetch("http://localhost:5000/api/orders", {
+      const response = await fetch(`${API_URL}/api/orders`, {
         credentials: "include",
       });
 
@@ -97,8 +98,8 @@ function AdminDashboard({ user, products, refreshProducts, addToast }) {
     };
 
     const url = isEditing
-      ? `http://localhost:5000/api/products/${editingId}`
-      : "http://localhost:5000/api/products";
+      ? `${API_URL}/api/products/${editingId}`
+      : `${API_URL}/api/products`;
     const method = isEditing ? "PUT" : "POST";
 
     try {
@@ -129,7 +130,7 @@ function AdminDashboard({ user, products, refreshProducts, addToast }) {
   const handleDeleteProduct = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const response = await fetch(`${API_URL}/api/products/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -150,7 +151,7 @@ function AdminDashboard({ user, products, refreshProducts, addToast }) {
   // Update Order Status
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+      const response = await fetch(`${API_URL}/api/orders/${orderId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

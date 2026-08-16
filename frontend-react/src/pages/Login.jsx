@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_URL } from "../config";
 
 function Login({ setUser, setPage, addToast }) {
   const [isRegister, setIsRegister] = useState(false);
@@ -16,7 +17,7 @@ function Login({ setUser, setPage, addToast }) {
       : { email, password };
 
     try {
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`${API_URL}${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

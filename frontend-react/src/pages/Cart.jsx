@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_URL } from "../config";
 
 function Cart({ cart, setCart, user, setPage, addToast }) {
   const [shippingAddress, setShippingAddress] = useState("");
@@ -42,7 +43,7 @@ function Cart({ cart, setCart, user, setPage, addToast }) {
         price: item.price,
       }));
 
-      const response = await fetch("http://localhost:5000/api/orders", {
+      const response = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
