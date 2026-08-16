@@ -12,23 +12,22 @@ This is a MERN stack e-commerce web application with a dynamic React frontend, N
 
 Follow these steps to deploy both the frontend and backend successfully with the latest configuration fixes.
 
-### 1. Deploy the Backend (Render)
-Render is the easiest way to host the Express backend for free.
+### 1. Deploy the Backend (Vercel)
+You can deploy your Express backend on Vercel as a Serverless function.
 
-1. Go to [Render Dashboard](https://dashboard.render.com/) and click **New** -> **Web Service**.
-2. Connect your GitHub repository `ecart-website`.
+1. Go to [Vercel Dashboard](https://vercel.com/dashboard) and click **Add New** -> **Project**.
+2. Import your GitHub repository `ecart-website`.
 3. Set the following settings:
-   * **Name:** `ecart-backend` (or similar)
+   * **Framework Preset:** `Other` (or select `Express` if it autodetects)
    * **Root Directory:** `backend`
-   * **Runtime:** `Node`
-   * **Build Command:** `npm install`
-   * **Start Command:** `node server.js`
-4. Click **Advanced** and add the following **Environment Variables**:
+4. Click on **Environment Variables** and add:
    * `MONGODB_URI`: `mongodb+srv://swastikadubey4_db_user:xPEVbsHqnXs3m2Up@cluster0.nb2zvqi.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0`
    * `JWT_SECRET`: `supersecret12345`
    * `NODE_ENV`: `production`
-5. Click **Create Web Service**. 
-6. Once deployed, copy your backend URL (e.g., `https://ecart-backend.onrender.com`).
+5. Click **Deploy**.
+6. Once deployed, copy your backend Vercel URL (e.g., `https://ecart-backend.vercel.app`).
+
+*(Alternatively, you can deploy the backend on Render by choosing Root Directory as `backend`, Build Command as `npm install`, and Start Command as `node server.js`.)*
 
 ---
 
@@ -42,7 +41,7 @@ Vercel is the recommended hosting for the React frontend.
    * **Root Directory:** `frontend-react`
 4. Click on **Environment Variables** and add:
    * **Key:** `VITE_API_URL`
-   * **Value:** `<YOUR_DEPLOYED_BACKEND_URL>` (Use the URL you copied from Render in step 1, **without** a trailing slash, e.g., `https://ecart-backend.onrender.com`)
+   * **Value:** `<YOUR_DEPLOYED_BACKEND_URL>` (Use the URL you copied from Vercel/Render in step 1, **without** a trailing slash, e.g., `https://ecart-backend.vercel.app`)
 5. Click **Deploy**.
 
 ---
