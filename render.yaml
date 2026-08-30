@@ -21,7 +21,6 @@ services:
   - type: web
     name: ecart-frontend
     runtime: static
-    plan: free
     rootDir: frontend-react
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
