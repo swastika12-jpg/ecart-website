@@ -28,9 +28,10 @@ app.use(
       ];
 
       const isVercel = origin.endsWith(".vercel.app");
+      const isRender = origin.endsWith(".onrender.com");
       const isLocal = origin.startsWith("http://localhost");
 
-      if (allowedOrigins.includes(origin) || isVercel || isLocal) {
+      if (allowedOrigins.includes(origin) || isVercel || isRender || isLocal) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
