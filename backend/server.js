@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const Product = require("./models/Product");
 const cookieParser = require("cookie-parser");
@@ -8,10 +9,17 @@ const cookieParser = require("cookie-parser");
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
-
 const app = express();
+
+// Ensure MongoDB is connected for every incoming request in serverless
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+  } catch (err) {
+    console.error("Database connection error in request:", err.message);
+  }
+  next();
+});
 
 // Middlewares
 app.use(
@@ -309,12 +317,29 @@ const seedProducts = async () => {
   }
 };
 
-// Seed Products on Startup
-seedProducts();
+// Seed Products on Startup (only in local environment)
+if (!process.env.VERCEL) {
+  connectDB().then(() => seedProducts());
+}
 
 // Health check route
 app.get("/", (req, res) => {
-  res.send("Backend E-Commerce API is running...");
+  const isDbConnected = mongoose.connection.readyState === 1;
+  res.json({
+    status: "online",
+    message: "Backend E-Commerce API is running successfully!",
+    database: isDbConnected ? "connected" : "connecting/disconnected",
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Global error handling middleware so the serverless function never crashes unexpectedly
+app.use((err, req, res, next) => {
+  console.error("Global Server Error:", err);
+  res.status(500).json({
+    error: err.message || "Internal Server Error",
+    status: "failed"
+  });
 });
 
 const PORT = process.env.PORT || 5000;
@@ -325,3 +350,4 @@ if (!process.env.VERCEL) {
 }
 
 module.exports = app;
+
