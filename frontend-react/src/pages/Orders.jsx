@@ -8,9 +8,12 @@ function Orders({ user, setPage, addToast }) {
   const fetchOrders = async () => {
     if (!user) return;
     setLoading(true);
-    setError("");
     try {
+      const headers = {
+        ...(user?.token ? { Authorization: `Bearer ${user.token}` } : {}),
+      };
       const response = await fetch(`${API_URL}/api/orders/myorders`, {
+        headers,
         credentials: "include",
       });
 

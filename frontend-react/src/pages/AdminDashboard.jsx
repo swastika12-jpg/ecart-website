@@ -24,6 +24,9 @@ function AdminDashboard({ user, products, refreshProducts, addToast }) {
     setLoadingOrders(true);
     try {
       const response = await fetch(`${API_URL}/api/orders`, {
+        headers: {
+          ...(user?.token ? { Authorization: `Bearer ${user.token}` } : {}),
+        },
         credentials: "include",
       });
 
@@ -107,6 +110,7 @@ function AdminDashboard({ user, products, refreshProducts, addToast }) {
         method,
         headers: {
           "Content-Type": "application/json",
+          ...(user?.token ? { Authorization: `Bearer ${user.token}` } : {}),
         },
         credentials: "include",
         body: JSON.stringify(payload),
@@ -132,6 +136,9 @@ function AdminDashboard({ user, products, refreshProducts, addToast }) {
     try {
       const response = await fetch(`${API_URL}/api/products/${id}`, {
         method: "DELETE",
+        headers: {
+          ...(user?.token ? { Authorization: `Bearer ${user.token}` } : {}),
+        },
         credentials: "include",
       });
 
@@ -155,6 +162,7 @@ function AdminDashboard({ user, products, refreshProducts, addToast }) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          ...(user?.token ? { Authorization: `Bearer ${user.token}` } : {}),
         },
         credentials: "include",
         body: JSON.stringify({ status: newStatus }),

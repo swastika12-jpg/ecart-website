@@ -51,6 +51,7 @@ router.post("/register", async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        token,
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
@@ -78,6 +79,7 @@ router.post("/login", async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        token,
       });
     } else {
       res.status(401).json({ message: "Invalid email or password" });
